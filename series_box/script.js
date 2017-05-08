@@ -1,85 +1,15 @@
-/*// callback for successful getConfiguration call
-        function configSuccessCallback(data) {
-            'use strict';
-            // Set the base image url to the returned base_url value plus w185, shows posters with a width of 185 pixels.
-            // Store it in localStorage so we don't make the configuration call every time.
-            localStorage.setItem('tmdbImageUrlBase', JSON.parse(data).images.base_url + 'w185');
-            $('#results').text('tmdbImageUrlBase downloaded from themoviedb.org: ' + localStorage.getItem('tmdbImageUrlBase'));
-        }
-        // callback for getConfiguration call error
-        function configErrorCallback(data) {
-            'use strict';
-            $('#results').text('Error getting TMDb configuration! ' + JSON.parse(data).status_message);
-        }
-        // check localStorage for imageBaseUrl, download from TMDb if not found
-        if (localStorage.getItem('tmdbImageUrlBase')) {
-            $('#results').text('tmdbImageUrlBase retrieved from localstorage: ' + localStorage.getItem('tmdbImageUrlBase'));
-        } else {
-            theMovieDb.configurations.getConfiguration(configSuccessCallback, configErrorCallback);
-        }
-
-        // callback for successful movie search
-        function successCallback(data) {
-            'use strict';
-            $('#results').text('');
-            data = JSON.parse(data);
-            //console.log(data);
-            // we just take the first result and display it
-            if (data.results && data.results.length > 0) {
-                var imageUrl = localStorage.getItem('tmdbImageUrlBase') + data.results[0].poster_path;
-                $('#results').append('Title: <b>' + data.results[0].title + '</b><br />');
-                $('#results').append('Movie Id: ' + data.results[0].id + '<br />');
-                $('#results').append('<img src="' + imageUrl + '" />');
-            } else {
-                $('#results').text('Nothing found');
-                console.log('Nothing found');
-            }
-        }
-        // callback for movie search error
-        function errorCallback(data) {
-            'use strict';
-            //console.log('error: \n' + data);
-            $('#results').text('Error searching. ' + JSON.parse(data).status_message);
-        }
-
-        // search button click event handler
-        $('#searchButton').click(function () {
-            'use strict';
-            var searchTerm = $('#movieNameInput').val(),
-                searchYear = $('#movieYearInput').val(),
-                options = { "query": searchTerm };
-            //options.query = searchTerm;
-            if (!isNaN(searchYear)) {
-                options.year = searchYear;
-            }
-            theMovieDb.search.getMovie(options, successCallback, errorCallback);
-        });
-
-*/
-
-
-/*var xhr = new XMLHttpRequest();
-xhr.open('POST', 'https://api.themoviedb.org/3/movie/550?api_key=d2d93610a9719f1dd1ea6d2ea26da663');
-xhr.onreadystatechange = function() {
-  if (xhr.readyState === 4) {
-    alert(xhr.responseText);
-  }
-};
-// envoi d'une chaine de caractères:
-xhr.send('ceci est un exemple de données envoyées');*/
-
-
+/*Click sur meilleur série*/
 $('#best').on({
 	click: function (e) {
         
     
-       
+       /* Lors du click sur meilleurs séries retire les div de l'accueil*/
      document.getElementById('back').classList.remove('hidden');
      document.getElementById('locate').classList.add('hidden');
      document.getElementById('best').classList.add('hidden');
 
 
-
+/* Requête API vers the moviedb pour tiré un fichier liste contenant les jsons des meilleurs films */
 $.ajax({
 
     url: "https://api.themoviedb.org/3/discover/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&sort_by=popularity.desc&page=1&timezone=Europe%2FParis&include_null_first_air_dates=false" ,
@@ -94,9 +24,9 @@ $.ajax({
        
         var arr=[];
         arr=data.results;
-
+/* Boucle sur la liste de json */
     $.each(arr,function(index,element){
-        
+        /* La fonction append permettra de générer du html à la suite de la balise correspondante à l'id showresult */ //Ceci afin d'afficher les résultats à la chaine
     $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td><a href="#" class="detail" id="'+element.id+'">'+element.name+'</a></td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
 
         })
@@ -108,18 +38,20 @@ $.ajax({
         
 }});
 
+// On lance une requete lors de l'entrée sur l'image de recherche
 $('#searchButton').on({click:function(e){
     
     
     if($('#tags').val()==''){   
        
-       alert('Le champ de recherche est vide')
+       alert('Le champ de recherche est vide') //Conditions requises //
        }
        else{
+           /* On retire les éléments du dom de l'accueil */
            document.getElementById('back').classList.remove('hidden');
      document.getElementById('locate').classList.add('hidden');
      document.getElementById('best').classList.add('hidden');
-           
+           // On fait la requete API en modifiant le query du search par la valeur entrée dans l'input de recherche, cette valeur est rentrée dans l'input avec l'id tags.
            var query=$('#tags').val();
            var urlsearch="https://api.themoviedb.org/3/search/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&query="+query+"&page=1&include_adult=false"
             $.ajax({
@@ -138,7 +70,7 @@ $('#searchButton').on({click:function(e){
         arr=data.results;
 
     $.each(arr,function(index,element){
-        
+        // On continue à utiliser append pour générer l'html
     $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td><a href="#" class="detail" id="'+element.id+'">'+element.name+'</a></td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
 
         })
@@ -155,9 +87,13 @@ $('#searchButton').on({click:function(e){
     
 }})
 
+
+// On utilise la méthode $(document).on car on ne peux pas utiliser $('selecteur').on si le sélecteur a été généré dans le javascript, en effet si il n'est pas présent dès la création du DOM il faut utiliser le sélecteur document.
 $(document).on('click', '.detail', function(){
     document.getElementById('showresult').classList.add('hidden');
    var idt=this.id;
+    
+   // On avait auparavant inséré dans l'id des <td> les id de la base de données de themoviedb
     $.ajax({
 
     url: "https://api.themoviedb.org/3/tv/"+idt+"?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR" ,
@@ -177,12 +113,15 @@ $(document).on('click', '.detail', function(){
     
 })
 
+// On relance le DOM lors du click sur le bouton retour car c'est une application one-page (sinon on utilise location.href='index.html' ça marche aussi)
 
 $('#back').on({click:function(e){
     
     location.reload();
 }})
 
+
+// On lance lors du click sur #locate le processus de questionnement
 $('#locate').on({click:function(e){
     
     document.getElementById('back').classList.remove('hidden');
@@ -193,10 +132,12 @@ $('#locate').on({click:function(e){
     
 }})
 
+// On réutilise la méthode du click sur document car les élements utilisé (ici #q1f) n'étaient pas présent lors de la création du DOM.
 $(document).on('click', '#q1f', function(){
     var answer1=$('input[name=second]:checked').val();
     document.getElementById('question').classList.add('hidden');
-    console.log(answer1)
+     // J'ai inséré les id de genres de la base de donnée de themoviedb directement dans la value des inputs de l'html que je récupère ici pour les insérer dans l'html.
+    // On lance l'url avec la valeur récupéré dans l'id de l'input correspondant aux genres
        var urlsearch="https://api.themoviedb.org/3/discover/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&sort_by=popularity.desc&page=1&with_genres="+answer1+"&include_null_first_air_dates=false"
             $.ajax({
 
@@ -214,7 +155,7 @@ $(document).on('click', '#q1f', function(){
         arr=data.results;
 
     $.each(arr,function(index,element){
-        
+        // On génère l'html
     $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td><a href="#" class="detail" id="'+element.id+'">'+element.name+'</a></td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
 
         })
