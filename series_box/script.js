@@ -91,12 +91,13 @@ $.ajax({
 
     success: function (data) {
 
+       
         var arr=[];
         arr=data.results;
 
     $.each(arr,function(index,element){
-        console.log(element)
-    $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td>'+element.name+'</td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
+        
+    $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td><a href="#" class="detail" id="'+element.id+'">'+element.name+'</a></td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
 
         })
 
@@ -106,3 +107,30 @@ $.ajax({
 
         
 }});
+
+$(document).on('click', '.detail', function(){
+    document.getElementById('showresult').classList.add('hidden');
+   var idt=this.id;
+    $.ajax({
+
+    url: "https://api.themoviedb.org/3/tv/"+idt+"?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR" ,
+        
+    
+
+    dataType: 'json',
+    method: 'GET',
+
+    success: function (data) {
+       
+          $('#showresultdet').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+data.poster_path+'"/></td><td>'+data.name+'</td><td>'+data.overview+'</td><td>'+data.vote_average+'/10</td><td>'+data.seasons.length+' Saisons</td></tr>')  
+    
+            
+        
+    }});
+    
+})
+
+$('#back').on({click:function(e){
+    
+    location.reload();
+}})
