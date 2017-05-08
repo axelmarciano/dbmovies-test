@@ -1,0 +1,75 @@
+@font-face {
+	font-family: "Fonte1";
+	src: url('../series_box/font/alpaca.ttf');
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	/*justify-content: space-between;*/
+	align-items: center;
+	height: 100%;
+}
+
+#title {
+  font-size: 1.5rem;
+  background: -webkit-linear-gradient(#e67e22, #ff0050);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Fonte1";
+}
+
+#search {
+	display: flex;
+}
+
+.hidden {
+	display: none;
+}
+
+img {/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e67e22+0,ff0050+100 */
+	background: #e67e22; /* Old browsers */
+background: -moz-linear-gradient(top,  #e67e22 0%, #ff0050 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #e67e22 0%,#ff0050 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #e67e22 0%,#ff0050 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e67e22', endColorstr='#ff0050',GradientType=0 ); /* IE6-9 */
+}
+
+input {
+	height: 50px;
+}
+
+img {
+	height: 50px;
+}
+
+#nav {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+#back {
+}
+
+#mainmenu {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 100%;
+	width: 100%;
+}
+
+#locate {
+	background-image: url();
+	background-color: rgba(0, 0, 0, 0.5);
+	margin: auto;
+}
+
+#best {
+	background-image: url();
+	background-color: rgba(0, 0, 0, 0.5);
+	margin: auto;
+}

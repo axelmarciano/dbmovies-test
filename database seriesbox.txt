@@ -1,0 +1,5 @@
+http://www.omdbapi.com/
+https://www.themoviedb.org/documentation/api
+https://github.com/cavestri/themoviedb-javascript-library/wiki
+https://github.com/cavestri/themoviedb-javascript-library/
+https://github.com/EtienneWan/tmdb-js/
