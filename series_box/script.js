@@ -108,6 +108,53 @@ $.ajax({
         
 }});
 
+$('#searchButton').on({click:function(e){
+    
+    
+    if($('#tags').val()==''){   
+       
+       alert('Le champ de recherche est vide')
+       }
+       else{
+           document.getElementById('back').classList.remove('hidden');
+     document.getElementById('locate').classList.add('hidden');
+     document.getElementById('best').classList.add('hidden');
+           
+           var query=$('#tags').val();
+           var urlsearch="https://api.themoviedb.org/3/search/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&query="+query+"&page=1&include_adult=false"
+            $.ajax({
+
+    url: urlsearch ,
+        
+    
+
+    dataType: 'json',
+    method: 'GET',
+
+    success: function (data) {
+        console.log(data)
+       
+          var arr=[];
+        arr=data.results;
+
+    $.each(arr,function(index,element){
+        
+    $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td><a href="#" class="detail" id="'+element.id+'">'+element.name+'</a></td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
+
+        })
+    
+            
+        
+    }});
+
+           
+       }
+    
+    
+    
+    
+}})
+
 $(document).on('click', '.detail', function(){
     document.getElementById('showresult').classList.add('hidden');
    var idt=this.id;
@@ -129,6 +176,7 @@ $(document).on('click', '.detail', function(){
     }});
     
 })
+
 
 $('#back').on({click:function(e){
     
