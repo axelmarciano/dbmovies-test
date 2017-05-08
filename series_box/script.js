@@ -69,23 +69,40 @@ xhr.onreadystatechange = function() {
 xhr.send('ceci est un exemple de données envoyées');*/
 
 
-document.getElementById('best').onclick = function() {
-  /*document.getElementById('back').style.display = 'block';*/
-  document.getElementById('back').classList.remove('hidden');
-  document.getElementById('locate').classList.add('hidden');
-  document.getElementById('best').classList.add('hidden');
+$('#best').on({
+	click: function (e) {
+        
+    
+       
+     document.getElementById('back').classList.remove('hidden');
+     document.getElementById('locate').classList.add('hidden');
+     document.getElementById('best').classList.add('hidden');
 
-  var data = null;
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
 
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        console.log(this.responseText);
-      }
-    });
 
-    xhr.open("GET", "https://api.themoviedb.org/3/discover/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&sort_by=popularity.desc&page=1&timezone=Europe%2FParis&include_null_first_air_dates=false");
+$.ajax({
 
-    xhr.send(data);
-};
+    url: "https://api.themoviedb.org/3/discover/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&sort_by=popularity.desc&page=1&timezone=Europe%2FParis&include_null_first_air_dates=false" ,
+
+    
+
+    dataType: 'json',
+    method: 'GET',
+
+    success: function (data) {
+
+        var arr=[];
+        arr=data.results;
+
+    $.each(arr,function(index,element){
+        console.log(element)
+    $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td>'+element.name+'</td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
+
+        })
+
+}})
+
+
+
+        
+}});
