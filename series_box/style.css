@@ -29,6 +29,20 @@ body {
 	display: none;
 }
 
+#showresult{
+    
+    
+    margin-top:5%
+    
+}
+
+#showresultdet{
+    
+    margin-bottom:50%;
+    margin-top:5%;
+}
+
+
 img {/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e67e22+0,ff0050+100 */
 	background: #e67e22; /* Old browsers */
 background: -moz-linear-gradient(top,  #e67e22 0%, #ff0050 100%); /* FF3.6-15 */
@@ -49,6 +63,7 @@ img {
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
+    height:50px
 }
 
 #back {
