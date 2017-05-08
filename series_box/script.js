@@ -182,3 +182,52 @@ $('#back').on({click:function(e){
     
     location.reload();
 }})
+
+$('#locate').on({click:function(e){
+    
+    document.getElementById('back').classList.remove('hidden');
+     document.getElementById('locate').classList.add('hidden');
+     document.getElementById('best').classList.add('hidden');
+    document.getElementById('question').classList.remove('hidden')
+    
+    
+}})
+
+$(document).on('click', '#q1f', function(){
+    var answer1=$('input[name=second]:checked').val();
+    document.getElementById('question').classList.add('hidden');
+    console.log(answer1)
+       var urlsearch="https://api.themoviedb.org/3/discover/tv?api_key=d2d93610a9719f1dd1ea6d2ea26da663&language=fr-FR&sort_by=popularity.desc&page=1&with_genres="+answer1+"&include_null_first_air_dates=false"
+            $.ajax({
+
+    url: urlsearch ,
+        
+    
+
+    dataType: 'json',
+    method: 'GET',
+
+    success: function (data) {
+        console.log(data)
+       
+          var arr=[];
+        arr=data.results;
+
+    $.each(arr,function(index,element){
+        
+    $('#showresult').append('<tr><td><img src="http://image.tmdb.org/t/p/w185/'+element.poster_path+'"/></td><td><a href="#" class="detail" id="'+element.id+'">'+element.name+'</a></td><td>'+element.overview+'</td><td>'+element.vote_average+'/10</td></tr>')
+
+        })
+    
+            
+        
+    }});
+
+           
+       })
+               
+    
+
+    
+    
+
